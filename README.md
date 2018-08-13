@@ -1,12 +1,12 @@
 # TACC Wrangler PegasusExample
 
-This is an example Pegasus workflow for running on the login node on TACC Wrangler. It is using a local HTCondor install for workflow/job management and Glite to transform HTCondor jobs into SLURM jobs. An overview of such setups can be found in the [Pegasus Glite Documentation](https://pegasus.isi.edu/documentation/glite.php).Currently, only one of the TACC Wrangler's submit nodes have the HTCondor/Glite stack (`login1.wrangler.tacc.utexas.edu`)
+This is an example Pegasus workflow for running on the login node on TACC Wrangler. It is using a local HTCondor install for workflow/job management and Glite to transform HTCondor jobs into SLURM jobs. An overview of such setups can be found in the [Pegasus Glite Documentation](https://pegasus.isi.edu/documentation/glite.php). Currently, only one of the TACC Wrangler's submit nodes have the HTCondor/Glite stack (`login1.wrangler.tacc.utexas.edu`)
 
 The workflow is the typical Black Diamond example used in the Pegasus tutorial. Please note:
 
  * Queue configuration, walltime, and project name are defined in `sites.template.xml`. At the minimum, you need to update the project for the example to run under your own user account/allocation.
  * Node/core requirements are set in `dax-generator.py`. This is to highlight that those requirements can change for the different jobs in the workflow.
- * `pegasus.conf` contains throttle settings for limit the number of jobs going to SLURM
+ * `pegasus.conf` contains throttle settings for limiting the number of jobs going to SLURM
  
 ## Running the Example
 
