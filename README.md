@@ -6,6 +6,7 @@ The workflow is the typical Black Diamond example used in the Pegasus tutorial. 
 
  * Queue configuration, walltime, and project name are defined in `sites.template.xml`. At the minimum, you need to update the project for the example to run under your own user account/allocation.
  * Node/core requirements are set in `dax-generator.py`. This is to highlight that those requirements can change for the different jobs in the workflow.
+ * `pegasus.conf` contains throttle settings for limit the number of jobs going to SLURM
  
 ## Running the Example
 
