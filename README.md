@@ -1,4 +1,4 @@
-# TACC Wrangler PegasusExample
+# TACC Wrangler Pegasus Example
 
 This is an example Pegasus workflow for running on the login node on TACC Wrangler. It is using a local HTCondor install for workflow/job management and Glite to transform HTCondor jobs into SLURM jobs. An overview of such setups can be found in the [Pegasus Glite Documentation](https://pegasus.isi.edu/documentation/glite.php). Currently, only one of the TACC Wrangler's submit nodes have the HTCondor/Glite stack (`login1.wrangler.tacc.utexas.edu`)
 
