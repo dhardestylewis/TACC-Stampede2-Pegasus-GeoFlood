@@ -1,0 +1,9 @@
+tr system::chmod {
+  site tacc_wrangler {
+    profile pegasus "cores" "1"
+    profile pegasus "nodes" "1"
+    pfn "/bin/chmod"
+    type "INSTALLED"
+  }
+}
+

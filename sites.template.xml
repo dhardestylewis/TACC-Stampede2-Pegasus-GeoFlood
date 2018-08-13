@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitecatalog xmlns="http://pegasus.isi.edu/schema/sitecatalog"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://pegasus.isi.edu/schema/sitecatalog http://pegasus.isi.edu/schema/sc-4.0.xsd"
+             version="4.0">
+    <site handle="local">
+        <directory  path="$WORK_DIR/scratch" type="shared-scratch">
+            <file-server  operation="all" url="file://$WORK_DIR/scratch" />
+        </directory>
+        <directory  path="$WORK_DIR/outputs" type="shared-storage">
+            <file-server  operation="all" url="file://$WORK_DIR/outputs">
+            </file-server>
+        </directory>
+    </site>
+    <site handle="tacc_wrangler">
+        <directory  path="$WORK_DIR/shared-scratch" type="shared-scratch">
+            <file-server  operation="all" url="file://$WORK_DIR/shared-scratch" />
+        </directory>
+        <profile namespace="env" key="PEGASUS_HOME">$PEGASUS_HOME</profile>
+        <profile namespace="condor" key="grid_resource">batch slurm</profile>
+        <profile namespace="pegasus" key="style">glite</profile>
+        <profile namespace="pegasus" key="data.configuration">sharedfs</profile>
+        <profile namespace="pegasus" key="auxillary.local">True</profile>
+        <profile namespace="pegasus" key="queue">normal</profile>
+        <profile namespace="pegasus" key="runtime">3600</profile>
+        <profile namespace="pegasus" key="project">CHANGEME</profile>
+    </site>
+</sitecatalog>
+
