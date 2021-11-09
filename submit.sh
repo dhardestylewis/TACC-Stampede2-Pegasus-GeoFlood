@@ -7,7 +7,7 @@ export TOP_DIR=`cd $TOP_DIR && pwd`
 export RUN_ID=`date --iso-8601='seconds' | sed 's/://g'`
 export WORK_DIR=$WORK/$RUN_ID
 
-export PEGASUS_HOME=/home/00384/rynge/software/pegasus/4.9.0dev
+export PEGASUS_HOME=/home1/00384/rynge/software/pegasus-4.9.3
 export PATH=$PEGASUS_HOME/bin:$PATH
 
 echo

@@ -21,9 +21,9 @@
         <profile namespace="pegasus" key="style">glite</profile>
         <profile namespace="pegasus" key="data.configuration">sharedfs</profile>
         <profile namespace="pegasus" key="auxillary.local">True</profile>
-        <profile namespace="pegasus" key="queue">normal</profile>
-        <profile namespace="pegasus" key="runtime">3600</profile>
-        <profile namespace="pegasus" key="project">CHANGEME</profile>
+        <profile namespace="pegasus" key="queue">development</profile>
+        <profile namespace="pegasus" key="runtime">1800</profile>
+        <profile namespace="pegasus" key="project">PT2050-DataX</profile>
     </site>
 </sitecatalog>
 
