@@ -51,7 +51,7 @@ Monitor the workflow with the provided `pegasus-status ...` command.
 
 Once the workfow is complete, you will find outputs under the work dir printed right after the `submit.sh` command.
 
-## Modificiations to the Stampede2 Setup
+## Modifications to the Stampede2 Setup
 
 The following patch was applied to the HTCondor install on TACC Stampede2 to solve a few missing environment variables in the HTCondor/Glite SLURM submit environment:
 
