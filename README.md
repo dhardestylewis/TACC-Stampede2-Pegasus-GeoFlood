@@ -1,4 +1,4 @@
-# TACC Stampede2 Pegasus Example
+# TACC Stampede2 Pegasus for GeoFlood
 
 This is a comprehensive example of the GeoFlood workflow using the Pegasus workflow management system (WMS) for running on a login node on TACC's Stampede2 supercomputer. It is using a local HTCondor install for workflow/job management and Glite to transform HTCondor jobs into SLURM jobs. An overview of such a setup can be found in the [Pegasus Glite Documentation](https://pegasus.isi.edu/documentation/glite.php).
 
