@@ -6,13 +6,13 @@ Currently, only one of the TACC Stampede2's submit nodes have the HTCondor/Glite
 
 The workflow is the comprehensive GeoFlood workflow. Please note:
 
- * Queue configuration, walltime, and project name are defined in `sites.template.xml`. At the minimum, you need to update the project for the example to run under your own user account/allocation.
- * Node/core requirements are set in `dax-generator.py`. This is to highlight that those requirements can change for the different jobs in the workflow.
+ * Queue configuration, walltime, and project name are defined in `sites.template.xml`. *If you do not use this workflow generator on Stampede2, you will need to update this file for it to run under your own set-up, user account, & allocation.*
+ * Node/core requirements are set in `dax-generator.py`. This is to highlight that those requirements can change for the different jobs in the workflow. *You will need to modify the input/output filenames in this file in order to successfully run GeoFlood using Pegasus.*
  * `pegasus.conf` contains throttle settings for limiting the number of jobs going to SLURM
  
 ## Running the Example
 
-After updating the project setting in `sites.template.xml`, run `./submit.sh` do submit a new workflow run:
+Run `./submit.sh` do submit a new workflow run:
 
 ```
 $ ./submit.sh
