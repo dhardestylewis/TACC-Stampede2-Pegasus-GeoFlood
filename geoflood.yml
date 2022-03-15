@@ -1,5 +1,22 @@
-name: geofloodenv
+name: geoflood
 channels:
   - conda-forge
   - defaults
-prefix: /work2/08291/mwa/stampede2/miniconda3/envs/geofloodenv
+dependencies:
+  - numpy
+  - geopandas
+  - scipy
+  - statsmodels
+  - matplotlib
+  - netcdf4
+  - dask
+  - psutil
+  - affine
+  - gdal
+  - python=3.7
+  - rasterio
+  - scikit-fmm
+  - scikit-image
+  - numba
+  - pandas
+  - proj-data

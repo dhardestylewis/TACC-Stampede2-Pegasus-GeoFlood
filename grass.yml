@@ -1,4 +1,4 @@
-name: grassenv
+name: grass
 channels:
   - conda-forge
   - defaults
@@ -10,4 +10,3 @@ dependencies:
   - six
   - fftw
   - proj=6.3.0
-prefix: /work2/08291/mwa/stampede2/miniconda3/envs/grassenv

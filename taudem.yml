@@ -1,8 +1,7 @@
-name: taudemenv
+name: taudem
 channels:
   - conda-forge
   - defaults
 dependencies:
   - gdal
   - python=2.7
-prefix: /work2/08291/mwa/stampede2/miniconda3/envs/taudemenv

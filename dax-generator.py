@@ -118,10 +118,10 @@ e_inunmap = Executable(namespace="geoflood", name="inunmap", version="Develop", 
 e_inunmap.addPFN(PFN("file://" + sys.argv[1] + "pegasus_wrapper.sh", "local"))
 geoflood.addExecutable(e_inunmap)
 
-# Add a preprocess job
+# Add job
 pitremove = Job(namespace="geoflood", name="pitremove", version="Develop")
 fel = File("ins/GIS/sablake/sablake_fel.tif")
-pitremove.addArguments("-e taudem","pitremove","-z",sablake,"-fel",fel)
+pitremove.addArguments("-e taudem","'pitremove -z",sablake,"-fel",fel+"'")
 pitremove.uses(sablake, link=Link.INPUT)
 pitremove.uses(fel, link=Link.OUTPUT)
 # required resources for the job
@@ -129,10 +129,10 @@ pitremove.addProfile(Profile(Namespace.PEGASUS, key="nodes", value="1"))
 pitremove.addProfile(Profile(Namespace.PEGASUS, key="cores", value="47"))
 geoflood.addJob(pitremove)
 
-# Add left Findrange job
+# Add job
 pygeonet_nonlinear_filter = Job(namespace="geoflood", name="pygeonet_nonlinear_filter", version="main")
 filtered = File("outs/GIS/sablake/PM_filtered_grassgis.tif")
-pygeonet_nonlinear_filter.addArguments("-e geoflood","python3 pygeonet_nonlinear_filter.py")
+pygeonet_nonlinear_filter.addArguments("-e geoflood","'python3 pygeonet_nonlinear_filter.py'")
 pygeonet_nonlinear_filter.uses(sablake, link=Link.INPUT)
 pygeonet_nonlinear_filter.uses(filtered, link=Link.OUTPUT)
 # required resources for the job
@@ -140,13 +140,13 @@ pygeonet_nonlinear_filter.addProfile(Profile(Namespace.PEGASUS, key="nodes", val
 pygeonet_nonlinear_filter.addProfile(Profile(Namespace.PEGASUS, key="cores", value="47"))
 geoflood.addJob(pygeonet_nonlinear_filter)
 
-# Add left Findrange job
+# Add job
 pygeonet_grass_py3 = Job(namespace="geoflood", name="pygeonet_grass_py3", version="main")
 fac = File("outs/GIS/sablake/sablake_fac.tif")
 outlets = File("outs/GIS/sablake/sablake_outlets.tif")
 basins = File("outs/GIS/sablake/sablake_basins.tif")
 fdr = File("outs/GIS/sablake/sablake_fdr.tif")
-pygeonet_grass_py3.addArguments("-e grass","-s",geoflood_dir+"/geoflood.sif","python3 pygeonet_grass_py3")
+pygeonet_grass_py3.addArguments("-e grass","-s",geoflood_dir+"/geoflood.sif","'python3 pygeonet_grass_py3'")
 pygeonet_grass_py3.uses(filtered, link=Link.INPUT)
 pygeonet_grass_py3.uses(fac, link=Link.OUTPUT)
 pygeonet_grass_py3.uses(outlets, link=Link.OUTPUT)
@@ -157,11 +157,11 @@ pygeonet_grass_py3.addProfile(Profile(Namespace.PEGASUS, key="nodes", value="1")
 pygeonet_grass_py3.addProfile(Profile(Namespace.PEGASUS, key="cores", value="47"))
 geoflood.addJob(pygeonet_grass_py3)
 
-# Add left Findrange job
+# Add job
 pygeonet_slope_curvature = Job(namespace="geoflood", name="pygeonet_slope_curvature", version="main")
 slope = File("outs/GIS/sablake/sablake_slope.tif")
 curvature = File("outs/GIS/sablake/sablake_curvature.tif")
-pygeonet_slope_curvature.addArguments("-e geoflood","python3 pygeonet_slope_curvature.py")
+pygeonet_slope_curvature.addArguments("-e geoflood","'python3 pygeonet_slope_curvature.py'")
 pygeonet_slope_curvature.uses(filtered, link=Link.INPUT)
 pygeonet_slope_curvature.uses(slope, link=Link.OUTPUT)
 pygeonet_slope_curvature.uses(curvature, link=Link.OUTPUT)
@@ -170,7 +170,7 @@ pygeonet_slope_curvature.addProfile(Profile(Namespace.PEGASUS, key="nodes", valu
 pygeonet_slope_curvature.addProfile(Profile(Namespace.PEGASUS, key="cores", value="47"))
 geoflood.addJob(pygeonet_slope_curvature)
 
-## Add left Findrange job
+## Add job
 #pygeonet_skeleton_definition = Job(namespace="geoflood", name="pygeonet_skeleton_definition", version="main")
 #skeleton = File("outs/GIS/sablake/sablake_skeleton.tif")
 #curvatureskeleton = File("outs/GIS/sablake/sablake_curvatureskeleton.tif")
@@ -179,7 +179,7 @@ geoflood.addJob(pygeonet_slope_curvature)
 #pygeonet_skeleton_definition.uses(filtered, link=Link.INPUT)
 #pygeonet_skeleton_definition.uses(curvature, link=Link.INPUT)
 #pygeonet_skeleton_definition.uses(fac, link=Link.INPUT)
-#pygeonet_skeleton_definition.uses(skelton, link=Link.OUTPUT)
+#pygeonet_skeleton_definition.uses(skeleton, link=Link.OUTPUT)
 #pygeonet_skeleton_definition.uses(curvatureskeleton, link=Link.OUTPUT)
 #pygeonet_skeleton_definition.uses(flowskeleton, link=Link.OUTPUT)
 ## required resources for the job
@@ -187,7 +187,7 @@ geoflood.addJob(pygeonet_slope_curvature)
 #pygeonet_skeleton_definition.addProfile(Profile(Namespace.PEGASUS, key="cores", value="47"))
 #geoflood.addJob(pygeonet_skeleton_definition)
 
-## Add left Findrange job
+## Add job
 #network_node_reading = Job(namespace="geoflood", name="Network_Node_Reading", version="main")
 #endpoints = File("outs/GIS/sablake/sablake_endPoints.csv")
 #network_node_reading.addArguments("-e geoflood","python3 Network_Node_Reading.py")
@@ -198,12 +198,12 @@ geoflood.addJob(pygeonet_slope_curvature)
 #network_node_reading.addProfile(Profile(Namespace.PEGASUS, key="cores", value="47"))
 #geoflood.addJob(network_node_reading)
 
-# Add left Findrange job
+# Add job
 relative_height_estimation = Job(namespace="geoflood", name="Relative_Height_Estimation", version="main")
 negahand = File("outs/GIS/sablake/sablake_NegaHand.tif")
 nhdflowline = File("outs/GIS/sablake/sablake_nhdflowline.tif")
 allocation = File("outs/GIS/sablake/sablake_Allocation.tif")
-relative_height_estimation.addArguments("-e geoflood","python3 Relative_Height_Estimation.py")
+relative_height_estimation.addArguments("-e geoflood","'python3 Relative_Height_Estimation.py'")
 relative_height_estimation.uses(flowline, link=Link.INPUT)
 relative_height_estimation.uses(negahand, link=Link.OUTPUT)
 relative_height_estimation.uses(nhdflowline, link=Link.OUTPUT)
@@ -213,7 +213,7 @@ relative_height_estimation.addProfile(Profile(Namespace.PEGASUS, key="nodes", va
 relative_height_estimation.addProfile(Profile(Namespace.PEGASUS, key="cores", value="47"))
 geoflood.addJob(relative_height_estimation)
 
-## Add left Findrange job
+## Add job
 #network_extraction = Job(namespace="geoflood", name="Network_Extraction", version="main")
 #channelnetwork = File("outs/GIS/sablake/sablake_channelNetwork.shp")
 #cost = File("outs/GIS/sablake/sablake_cost.tif")
@@ -232,11 +232,11 @@ geoflood.addJob(relative_height_estimation)
 #network_extraction.addProfile(Profile(Namespace.PEGASUS, key="cores", value="47"))
 #geoflood.addJob(network_extraction)
 
-# Add right Findrange job
+# Add job
 dinfflowdir = Job(namespace="geoflood", name="dinfflowdir", version="Develop")
 slp = File("outs/GIS/sablake/sablake_slp.tif")
 ang = File("outs/GIS/sablake/sablake_ang.tif")
-dinfflowdir.addArguments("-e taudem","dinfflowdir","-fel",fel,"-slp",slp,"-ang",ang)
+dinfflowdir.addArguments("-e taudem","'dinfflowdir -fel",fel,"-slp",slp,"-ang",ang+"'")
 dinfflowdir.uses(fel, link=Link.INPUT)
 dinfflowdir.uses(slp, link=Link.OUTPUT)
 dinfflowdir.uses(ang, link=Link.OUTPUT)
@@ -245,10 +245,10 @@ dinfflowdir.addProfile(Profile(Namespace.PEGASUS, key="nodes", value="1"))
 dinfflowdir.addProfile(Profile(Namespace.PEGASUS, key="cores", value="47"))
 geoflood.addJob(dinfflowdir)
 
-# Add right Findrange job
+# Add job
 dinfdistdown = Job(namespace="geoflood", name="dinfdistdown", version="Develop")
 hand = File("outs/GIS/sablake/sablake_hand.tif")
-dinfdistdown.addArguments("-e taudem","dinfdistdown","-src",nhdflowline,"-fel",fel,"-slp",slp,"-ang",ang,"-dd",hand,"-m","ave v")
+dinfdistdown.addArguments("-e taudem","'dinfdistdown -src",nhdflowline,"-fel",fel,"-slp",slp,"-ang",ang,"-dd",hand,"-m ave v'")
 dinfdistdown.uses(nhdflowline, link=Link.INPUT)
 dinfdistdown.uses(fel, link=Link.INPUT)
 dinfdistdown.uses(slp, link=Link.INPUT)
@@ -259,10 +259,10 @@ dinfdistdown.addProfile(Profile(Namespace.PEGASUS, key="nodes", value="1"))
 dinfdistdown.addProfile(Profile(Namespace.PEGASUS, key="cores", value="47"))
 geoflood.addJob(dinfdistdown)
 
-# Add right Findrange job
+# Add job
 streamline_segmentation = Job(namespace="geoflood", name="Streamline_Segmentation", version="main")
 channelsegment = File("outs/GIS/sablake/sablake_channelSegment.shp")
-streamline_segmentation.addArguments("-e geoflood","python3 Streamline_Segmentation.py","-nhd")
+streamline_segmentation.addArguments("-e geoflood","'python3 Streamline_Segmentation.py -nhd'")
 streamline_segmentation.uses(channelnetwork, link=Link.INPUT)
 streamline_segmentation.uses(channelsegment, link=Link.OUTPUT)
 # required resources for the job
@@ -270,10 +270,10 @@ streamline_segmentation.addProfile(Profile(Namespace.PEGASUS, key="nodes", value
 streamline_segmentation.addProfile(Profile(Namespace.PEGASUS, key="cores", value="47"))
 geoflood.addJob(streamline_segmentation)
 
-# Add right Findrange job
+# Add job
 grass_delineation_py3 = Job(namespace="geoflood", name="Grass_Delineation_py3", version="main")
 segmentcatchmenttif = File("outs/GIS/sablake/sablake_segmentCatchment.tif")
-grass_delineation_py3.addArguments("-e grass","-s",geoflood_dir+"/geoflood.sif","python3 Grass_Delineation_py3.py")
+grass_delineation_py3.addArguments("-e grass","-s",geoflood_dir+"/geoflood.sif","'python3 Grass_Delineation_py3.py'")
 grass_delineation_py3.uses(channelsegment, link=Link.INPUT)
 grass_delineation_py3.uses(fdr, link=Link.INPUT)
 grass_delineation_py3.uses(segmentcatchmenttif, link=Link.OUTPUT)
@@ -282,11 +282,11 @@ grass_delineation_py3.addProfile(Profile(Namespace.PEGASUS, key="nodes", value="
 grass_delineation_py3.addProfile(Profile(Namespace.PEGASUS, key="cores", value="47"))
 geoflood.addJob(grass_delineation_py3)
 
-# Add right Findrange job
+# Add job
 river_attribute_estimation = Job(namespace="geoflood", name="River_Attribute_Estimation", version="main")
 river_attribute = File("outs/Hydraulics/sablake/sablake_River_Attribute.txt")
 segmentcatchmentshp = File("outs/GIS/sablake/sablake_segmentCatchment.shp")
-river_attribute_estimation.addArguments("-e geoflood","python3 River_Attribute_Estimation.py")
+river_attribute_estimation.addArguments("-e geoflood","'python3 River_Attribute_Estimation.py'")
 river_attribute_estimation.uses(channelsegment, link=Link.INPUT)
 river_attribute_estimation.uses(segmentcatchmenttif, link=Link.INPUT)
 river_attribute_estimation.uses(river_attribute, link=Link.OUTPUT)
@@ -296,10 +296,10 @@ river_attribute_estimation.addProfile(Profile(Namespace.PEGASUS, key="nodes", va
 river_attribute_estimation.addProfile(Profile(Namespace.PEGASUS, key="cores", value="47"))
 geoflood.addJob(river_attribute_estimation)
 
-# Add right Findrange job
+# Add job
 catchhydrogeo = Job(namespace="geoflood", name="catchhydrogeo", version="Develop")
 hydroprop_basetable = File("outs/Hydraulics/sablake/hydroprop-basetable.csv")
-catchhydrogeo.addArguments("-e taudem","catchhydrogeo","-catchlist",river_attribute,"-h",stage,"-slp",slp,"-catch",segmentcatchmenttif,"-hand",hand,"-table",hydroprop_basetable)
+catchhydrogeo.addArguments("-e taudem","'catchhydrogeo -catchlist",river_attribute,"-h",stage,"-slp",slp,"-catch",segmentcatchmenttif,"-hand",hand,"-table",hydroprop_basetable+"'")
 catchhydrogeo.uses(river_attribute, link=Link.INPUT)
 catchhydrogeo.uses(stage, link=Link.INPUT)
 catchhydrogeo.uses(slp, link=Link.INPUT)
@@ -311,10 +311,10 @@ catchhydrogeo.addProfile(Profile(Namespace.PEGASUS, key="nodes", value="1"))
 catchhydrogeo.addProfile(Profile(Namespace.PEGASUS, key="cores", value="47"))
 geoflood.addJob(catchhydrogeo)
 
-# Add right Findrange job
+# Add job
 network_mapping = Job(namespace="geoflood", name="Network_Mapping", version="main")
 networkmapping = File("outs/Hydraulics/sablake/sablake_networkMapping.csv")
-network_mapping.addArguments("-e geoflood","python3 Network_Mapping.py")
+network_mapping.addArguments("-e geoflood","'python3 Network_Mapping.py'")
 network_mapping.uses(catchment, link=Link.INPUT)
 network_mapping.uses(segmentcatchmentshp, link=Link.INPUT)
 network_mapping.uses(networkmapping, link=Link.OUTPUT)
@@ -323,10 +323,10 @@ network_mapping.addProfile(Profile(Namespace.PEGASUS, key="nodes", value="1"))
 network_mapping.addProfile(Profile(Namespace.PEGASUS, key="cores", value="47"))
 geoflood.addJob(network_mapping)
 
-# Add right Findrange job
+# Add job
 hydraulic_property_postprocess = Job(namespace="geoflood", name="Hydraulic_Property_Postprocess", version="main")
 hydroprop_fulltable = File("outs/Hydraulics/sablake/hydroprop-fulltable.csv")
-hydraulic_property_postprocess.addArguments("-e geoflood","python3 Hydraulic_Property_Postprocess.py")
+hydraulic_property_postprocess.addArguments("-e geoflood","'python3 Hydraulic_Property_Postprocess.py'")
 hydraulic_property_postprocess.uses(networkmapping, link=Link.INPUT)
 hydraulic_property_postprocess.uses(comid_roughness, link=Link.INPUT)
 hydraulic_property_postprocess.uses(hydroprop_basetable, link=Link.INPUT)
@@ -336,11 +336,11 @@ hydraulic_property_postprocess.addProfile(Profile(Namespace.PEGASUS, key="nodes"
 hydraulic_property_postprocess.addProfile(Profile(Namespace.PEGASUS, key="cores", value="47"))
 geoflood.addJob(hydraulic_property_postprocess)
 
-# Add right Findrange job
+# Add job
 forecast_table = Job(namespace="geoflood", name="Forecast_Table", version="main")
 nwm_conusnc = File("outs/NWM/sablake/imelda20190918_8am.nc")
 nwm_conuscsv = File("outs/NWM/sablake/imelda20190918_8am.csv")
-forecast_table.addArguments("-e geoflood","python3 Forecast_Table.py",nwm_forecast.name)
+forecast_table.addArguments("-e geoflood","'python3 Forecast_Table.py",nwm_forecast+"'")
 forecast_table.uses(nwm_forecast, link=Link.INPUT)
 forecast_table.uses(networkmapping, link=Link.INPUT)
 forecast_table.uses(hydroprop_fulltable, link=Link.INPUT)
@@ -351,10 +351,10 @@ forecast_table.addProfile(Profile(Namespace.PEGASUS, key="nodes", value="1"))
 forecast_table.addProfile(Profile(Namespace.PEGASUS, key="cores", value="47"))
 geoflood.addJob(forecast_table)
 
-# Add right Findrange job
+# Add job
 inunmap = Job(namespace="geoflood", name="inunmap", version="Develop")
 nwm_inunmap = File("outs/Inundation/sablake/sablake_NWM_inunmap.tif")
-inunmap.addArguments("-e taudem","inunmap","-forecast",nwm_conusnc,"-catch",segmentcatchmenttif,"-hand",hand,"-mapfile",nwm_inunmap)
+inunmap.addArguments("-e taudem","'inunmap -forecast",nwm_conusnc,"-catch",segmentcatchmenttif,"-hand",hand,"-mapfile",nwm_inunmap+"'")
 inunmap.uses(nwm_conusnc, link=Link.INPUT)
 inunmap.uses(segmentcatchmenttif, link=Link.INPUT)
 inunmap.uses(hand, link=Link.INPUT)
