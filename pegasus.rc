@@ -1,0 +1,19 @@
+export num_tasks=11
+export work_dir="/work2/08291/mwa/stampede2"
+export geoflood_top_dir="GeoFlood"
+export project="sablake"
+export dem_name="sablake_r2f"
+export geonet_scripts="$work_dir/$geoflood_top_dir/GeoNet"
+export geoflood_scripts="$work_dir/$geoflood_top_dir/GeoFlood"
+export in_GIS_dir="$work_dir/$geoflood_top_dir/ins/GIS/$project"
+export out_GIS_dir="$work_dir/$geoflood_top_dir/outs/GIS/$project"
+export out_hydr_dir="$work_dir/$geoflood_top_dir/outs/Hydraulics/$project"
+export in_hydr_dir="$work_dir/$geoflood_top_dir/ins/Hydraulics/$project"
+export in_NWM_dir="$work_dir/$geoflood_top_dir/ins/NWM/$project"
+export out_NWM_dir="$work_dir/$geoflood_top_dir/outs/NWM/$project"
+export out_inun_dir="$work_dir/$geoflood_top_dir/outs/Inundation/$project"
+export nc_file="imelda20190919_12pm.nc"
+
+module load tacc-singularity
+
+#source $work_dir/miniconda3/etc/profile.d/conda.sh

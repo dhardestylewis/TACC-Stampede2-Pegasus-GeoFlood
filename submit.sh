@@ -22,7 +22,8 @@ envsubst < transformations.template.txt > $WORK_DIR/transformations.txt
 
 # generate the dax
 export PYTHONPATH=`pegasus-config --python`
-./dax-generator.py $PEGASUS_HOME > $WORK_DIR/black-diamond.dax
+export PEGASUS_TACC=/work2/04950/dhl/stampede2/TACC-Stampede2-Pegasus-GeoFlood
+./dax-generator.py $PEGASUS_TACC > $WORK_DIR/geoflood.dax
 
 # plan and submit the  workflow
 cd $WORK_DIR
@@ -31,7 +32,7 @@ pegasus-plan \
     --sites tacc_wrangler \
     --output-site local \
     --dir work \
-    --dax black-diamond.dax \
+    --dax geoflood.dax \
     --submit | tee plan.out
 
 
