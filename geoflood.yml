@@ -1,0 +1,5 @@
+name: geofloodenv
+channels:
+  - conda-forge
+  - defaults
+prefix: /work2/08291/mwa/stampede2/miniconda3/envs/geofloodenv
