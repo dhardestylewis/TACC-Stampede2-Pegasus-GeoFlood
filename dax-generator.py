@@ -8,39 +8,39 @@ if len(sys.argv) != 2:
         print("Usage: %s PEGASUS_HOME" % (sys.argv[0]))
         sys.exit(1)
 
-geoflood_dir = "/work2/08291/mwa/stampede2/GeoFlood"
+geoflood_dir = "/scratch/04950/dhlGeoFlood.sablake.git/"
 
 # Create a abstract dag
 geoflood = ADAG("geoflood")
 
 # Add input file to the DAX-level replica catalog
 sablake = File("ins/GIS/sablake/sablake.tif")
-sablake.addPFN(PFN("file://" + geoflood_dir + "/ins/GIS/sablake/sablake.tif", "local"))
+sablake.addPFN(PFN("file://" + geoflood_dir + "ins/GIS/sablake/sablake.tif", "local"))
 geoflood.addFile(sablake)
 
 # Add input file to the DAX-level replica catalog
 flowline = File("ins/GIS/sablake/Flowline.shp")
-flowline.addPFN(PFN("file://" + geoflood_dir + "/ins/GIS/sablake/Flowline.shp", "local"))
+flowline.addPFN(PFN("file://" + geoflood_dir + "ins/GIS/sablake/Flowline.shp", "local"))
 geoflood.addFile(flowline)
 
 # Add input file to the DAX-level replica catalog
 catchment = File("ins/GIS/sablake/Catchment.shp")
-catchment.addPFN(PFN("file://" + geoflood_dir + "/ins/GIS/sablake/Catchment.shp", "local"))
+catchment.addPFN(PFN("file://" + geoflood_dir + "ins/GIS/sablake/Catchment.shp", "local"))
 geoflood.addFile(catchment)
 
 # Add input file to the DAX-level replica catalog
 comid_roughness = File("ins/Hydraulics/sablake/COMID_Roughness.csv")
-comid_roughness.addPFN(PFN("file://" + geoflood_dir + "/ins/Hydraulics/sablake/COMID_Roughness.csv", "local"))
+comid_roughness.addPFN(PFN("file://" + geoflood_dir + "ins/Hydraulics/sablake/COMID_Roughness.csv", "local"))
 geoflood.addFile(comid_roughness)
 
 # Add input file to the DAX-level replica catalog
 stage = File("ins/Hydraulics/sablake/stage.txt")
-stage.addPFN(PFN("file://" + geoflood_dir + "/ins/Hydraulics/sablake/stage.txt", "local"))
+stage.addPFN(PFN("file://" + geoflood_dir + "ins/Hydraulics/sablake/stage.txt", "local"))
 geoflood.addFile(stage)
 
 # Add input file to the DAX-level replica catalog
 nwm_forecast = File("ins/Hydraulics/sablake/stage.txt")
-nwm_forecast.addPFN(PFN("file://" + geoflood_dir + "/ins/NWM/sablake/imelda20190918_8am.nc", "local"))
+nwm_forecast.addPFN(PFN("file://" + geoflood_dir + "ins/NWM/sablake/imelda20190918_8am.nc", "local"))
 geoflood.addFile(nwm_forecast)
 
 # Add executables to the DAX-level replica catalog
@@ -132,7 +132,7 @@ geoflood.addJob(pitremove)
 # Add job
 pygeonet_nonlinear_filter = Job(namespace="geoflood", name="pygeonet_nonlinear_filter", version="main")
 filtered = File("outs/GIS/sablake/PM_filtered_grassgis.tif")
-pygeonet_nonlinear_filter.addArguments("-e geoflood","'python3 pygeonet_nonlinear_filter.py'")
+pygeonet_nonlinear_filter.addArguments("-e geoflood","'python3",geoflood_dir+"GeoNet/pygeonet_nonlinear_filter.py'")
 pygeonet_nonlinear_filter.uses(sablake, link=Link.INPUT)
 pygeonet_nonlinear_filter.uses(filtered, link=Link.OUTPUT)
 # required resources for the job
@@ -146,7 +146,7 @@ fac = File("outs/GIS/sablake/sablake_fac.tif")
 outlets = File("outs/GIS/sablake/sablake_outlets.tif")
 basins = File("outs/GIS/sablake/sablake_basins.tif")
 fdr = File("outs/GIS/sablake/sablake_fdr.tif")
-pygeonet_grass_py3.addArguments("-e grass","-s",geoflood_dir+"/geoflood.sif","'python3 pygeonet_grass_py3'")
+pygeonet_grass_py3.addArguments("-e grass","-s",geoflood_dir+"/geoflood.sif","'python3",geoflood_dir+"GeoNet/pygeonet_grass_py3'")
 pygeonet_grass_py3.uses(filtered, link=Link.INPUT)
 pygeonet_grass_py3.uses(fac, link=Link.OUTPUT)
 pygeonet_grass_py3.uses(outlets, link=Link.OUTPUT)
@@ -161,7 +161,7 @@ geoflood.addJob(pygeonet_grass_py3)
 pygeonet_slope_curvature = Job(namespace="geoflood", name="pygeonet_slope_curvature", version="main")
 slope = File("outs/GIS/sablake/sablake_slope.tif")
 curvature = File("outs/GIS/sablake/sablake_curvature.tif")
-pygeonet_slope_curvature.addArguments("-e geoflood","'python3 pygeonet_slope_curvature.py'")
+pygeonet_slope_curvature.addArguments("-e geoflood","'python3",geoflood_dir+"GeoNet/pygeonet_slope_curvature.py'")
 pygeonet_slope_curvature.uses(filtered, link=Link.INPUT)
 pygeonet_slope_curvature.uses(slope, link=Link.OUTPUT)
 pygeonet_slope_curvature.uses(curvature, link=Link.OUTPUT)
@@ -203,7 +203,7 @@ relative_height_estimation = Job(namespace="geoflood", name="Relative_Height_Est
 negahand = File("outs/GIS/sablake/sablake_NegaHand.tif")
 nhdflowline = File("outs/GIS/sablake/sablake_nhdflowline.tif")
 allocation = File("outs/GIS/sablake/sablake_Allocation.tif")
-relative_height_estimation.addArguments("-e geoflood","'python3 Relative_Height_Estimation.py'")
+relative_height_estimation.addArguments("-e geoflood","'python3",geoflood_dir+"GeoFlood/Relative_Height_Estimation.py'")
 relative_height_estimation.uses(flowline, link=Link.INPUT)
 relative_height_estimation.uses(negahand, link=Link.OUTPUT)
 relative_height_estimation.uses(nhdflowline, link=Link.OUTPUT)
@@ -262,7 +262,7 @@ geoflood.addJob(dinfdistdown)
 # Add job
 streamline_segmentation = Job(namespace="geoflood", name="Streamline_Segmentation", version="main")
 channelsegment = File("outs/GIS/sablake/sablake_channelSegment.shp")
-streamline_segmentation.addArguments("-e geoflood","'python3 Streamline_Segmentation.py -nhd'")
+streamline_segmentation.addArguments("-e geoflood","'python3",geoflood_dir+"GeoFlood/Streamline_Segmentation.py -nhd'")
 streamline_segmentation.uses(channelnetwork, link=Link.INPUT)
 streamline_segmentation.uses(channelsegment, link=Link.OUTPUT)
 # required resources for the job
@@ -273,7 +273,7 @@ geoflood.addJob(streamline_segmentation)
 # Add job
 grass_delineation_py3 = Job(namespace="geoflood", name="Grass_Delineation_py3", version="main")
 segmentcatchmenttif = File("outs/GIS/sablake/sablake_segmentCatchment.tif")
-grass_delineation_py3.addArguments("-e grass","-s",geoflood_dir+"/geoflood.sif","'python3 Grass_Delineation_py3.py'")
+grass_delineation_py3.addArguments("-e grass","-s",geoflood_dir+"/geoflood.sif","'python3",geoflood_dir+"GeoFlood/Grass_Delineation_py3.py'")
 grass_delineation_py3.uses(channelsegment, link=Link.INPUT)
 grass_delineation_py3.uses(fdr, link=Link.INPUT)
 grass_delineation_py3.uses(segmentcatchmenttif, link=Link.OUTPUT)
@@ -286,7 +286,7 @@ geoflood.addJob(grass_delineation_py3)
 river_attribute_estimation = Job(namespace="geoflood", name="River_Attribute_Estimation", version="main")
 river_attribute = File("outs/Hydraulics/sablake/sablake_River_Attribute.txt")
 segmentcatchmentshp = File("outs/GIS/sablake/sablake_segmentCatchment.shp")
-river_attribute_estimation.addArguments("-e geoflood","'python3 River_Attribute_Estimation.py'")
+river_attribute_estimation.addArguments("-e geoflood","'python3",geoflood_dir+"GeoFlood/River_Attribute_Estimation.py'")
 river_attribute_estimation.uses(channelsegment, link=Link.INPUT)
 river_attribute_estimation.uses(segmentcatchmenttif, link=Link.INPUT)
 river_attribute_estimation.uses(river_attribute, link=Link.OUTPUT)
@@ -314,7 +314,7 @@ geoflood.addJob(catchhydrogeo)
 # Add job
 network_mapping = Job(namespace="geoflood", name="Network_Mapping", version="main")
 networkmapping = File("outs/Hydraulics/sablake/sablake_networkMapping.csv")
-network_mapping.addArguments("-e geoflood","'python3 Network_Mapping.py'")
+network_mapping.addArguments("-e geoflood","'python3",geoflood_dir+"GeoFlood/Network_Mapping.py'")
 network_mapping.uses(catchment, link=Link.INPUT)
 network_mapping.uses(segmentcatchmentshp, link=Link.INPUT)
 network_mapping.uses(networkmapping, link=Link.OUTPUT)
@@ -326,7 +326,7 @@ geoflood.addJob(network_mapping)
 # Add job
 hydraulic_property_postprocess = Job(namespace="geoflood", name="Hydraulic_Property_Postprocess", version="main")
 hydroprop_fulltable = File("outs/Hydraulics/sablake/hydroprop-fulltable.csv")
-hydraulic_property_postprocess.addArguments("-e geoflood","'python3 Hydraulic_Property_Postprocess.py'")
+hydraulic_property_postprocess.addArguments("-e geoflood","'python3",geoflood_dir+"GeoFlood/Hydraulic_Property_Postprocess.py'")
 hydraulic_property_postprocess.uses(networkmapping, link=Link.INPUT)
 hydraulic_property_postprocess.uses(comid_roughness, link=Link.INPUT)
 hydraulic_property_postprocess.uses(hydroprop_basetable, link=Link.INPUT)
@@ -340,7 +340,7 @@ geoflood.addJob(hydraulic_property_postprocess)
 forecast_table = Job(namespace="geoflood", name="Forecast_Table", version="main")
 nwm_conusnc = File("outs/NWM/sablake/imelda20190918_8am.nc")
 nwm_conuscsv = File("outs/NWM/sablake/imelda20190918_8am.csv")
-forecast_table.addArguments("-e geoflood","'python3 Forecast_Table.py",nwm_forecast+"'")
+forecast_table.addArguments("-e geoflood","'python3",geoflood_dir+"GeoFlood/Forecast_Table.py",nwm_forecast+"'")
 forecast_table.uses(nwm_forecast, link=Link.INPUT)
 forecast_table.uses(networkmapping, link=Link.INPUT)
 forecast_table.uses(hydroprop_fulltable, link=Link.INPUT)
