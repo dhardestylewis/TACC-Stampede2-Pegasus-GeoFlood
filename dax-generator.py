@@ -14,8 +14,8 @@ geoflood_dir = "/scratch/04950/dhlGeoFlood.sablake.git/"
 geoflood = ADAG("geoflood")
 
 # Add input file to the DAX-level replica catalog
-sablake = File("ins/GIS/sablake/sablake.tif")
-sablake.addPFN(PFN("file://" + geoflood_dir + "ins/GIS/sablake/sablake.tif", "local"))
+sablake = File("ins/GIS/sablake/sablake_r2f.tif")
+sablake.addPFN(PFN("file://" + geoflood_dir + "ins/GIS/sablake/sablake_r2f.tif", "local"))
 geoflood.addFile(sablake)
 
 # Add input file to the DAX-level replica catalog
@@ -40,7 +40,7 @@ geoflood.addFile(stage)
 
 # Add input file to the DAX-level replica catalog
 nwm_forecast = File("ins/Hydraulics/sablake/stage.txt")
-nwm_forecast.addPFN(PFN("file://" + geoflood_dir + "ins/NWM/sablake/imelda20190918_8am.nc", "local"))
+nwm_forecast.addPFN(PFN("file://" + geoflood_dir + "ins/NWM/sablake/imelda20190918_12pm.nc", "local"))
 geoflood.addFile(nwm_forecast)
 
 # Add executables to the DAX-level replica catalog
@@ -338,8 +338,8 @@ geoflood.addJob(hydraulic_property_postprocess)
 
 # Add job
 forecast_table = Job(namespace="geoflood", name="Forecast_Table", version="main")
-nwm_conusnc = File("outs/NWM/sablake/imelda20190918_8am.nc")
-nwm_conuscsv = File("outs/NWM/sablake/imelda20190918_8am.csv")
+nwm_conusnc = File("outs/NWM/sablake/imelda20190918_12pm.nc")
+nwm_conuscsv = File("outs/NWM/sablake/imelda20190918_12pm.csv")
 forecast_table.addArguments("-e geoflood","'python3",geoflood_dir+"GeoFlood/Forecast_Table.py",nwm_forecast+"'")
 forecast_table.uses(nwm_forecast, link=Link.INPUT)
 forecast_table.uses(networkmapping, link=Link.INPUT)
