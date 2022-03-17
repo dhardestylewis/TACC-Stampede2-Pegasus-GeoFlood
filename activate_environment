@@ -1,0 +1,15 @@
+#!/bin/bash
+
+source pegasus.rc
+
+if [ ! -z ${ENVIRONMENT+x} ]; then
+  eval "$(conda shell.bash hook)"
+  export LD_LIBRARY_PATH="${work_dir}/miniconda3/envs/${ENVIRONMENT}/lib:${LD_LIBRARY_PATH}"
+  conda activate ${ENVIRONMENT}
+fi
+
+eval "${POSITIONAL_ARGS}"
+
+if [ ! -z ${ENVIRONMENT+x} ]; then
+  conda deactivate
+fi

@@ -1,3 +1,4 @@
+export ACTIVATE_ENV_PATH="/work2/04950/dhl/stampede2/TACC-Stampede2-Pegasus-GeoFlood"
 export num_tasks=11
 export work_dir="/work2/08291/mwa/stampede2"
 export geoflood_top_dir="GeoFlood"
@@ -14,6 +15,4 @@ export out_NWM_dir="$work_dir/$geoflood_top_dir/outs/NWM/$project"
 export out_inun_dir="$work_dir/$geoflood_top_dir/outs/Inundation/$project"
 export nc_file="imelda20190919_12pm.nc"
 
-module load tacc-singularity
-
-#source $work_dir/miniconda3/etc/profile.d/conda.sh
+source "/work/04950/dhl/stampede2/miniconda3/etc/profile.d/conda.sh"

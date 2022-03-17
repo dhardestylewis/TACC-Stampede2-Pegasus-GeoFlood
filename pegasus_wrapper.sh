@@ -15,6 +15,11 @@ while [[ $# -gt 0 ]]; do
       shift ## past argument
       shift ## past value
       ;;
+    -m|--mpi)
+      MPI="$2"
+      shift ## past argument
+      shift ## past value
+      ;;
     *)
       POSITIONAL_ARGS+=("$1")
       shift
@@ -25,8 +30,7 @@ done
 set -- "${POSITIONAL_ARGS[@]}"
 
 
-activate_environment()
-{
+function activate_environment {
 
   source pegasus.rc
   
@@ -36,17 +40,33 @@ activate_environment()
     conda activate ${ENVIRONMENT}
   fi
   
-  eval "$1"
+  eval "${POSITIONAL_ARGS}"
   
   if [ ! -z ${ENVIRONMENT+x} ]; then
     conda deactivate
-    export LD_LIBRARY_PATH=$(echo "${LD_LIBRARY_PATH}" | sed -e "s/:$work_dir\/miniconda3\/envs\/${ENVIRONMENT}\/lib$//")
+#    export LD_LIBRARY_PATH=$(echo "${LD_LIBRARY_PATH}" | sed -e "s/:$work_dir\/miniconda3\/envs\/${ENVIRONMENT}\/lib$//")
   fi
 
 }
 
-if [ -z ${SINGULARITY+x} ]; then
-  activate_environment
-else
-  singularity exec ${SINGULARITY} activate_environment
-fi
+function singularity_command {
+  if [ -z ${SINGULARITY+x} ]; then
+    activate_environment
+  else
+    source pegasus.rc
+    export ENVIRONMENT
+    export POSITIONAL_ARGS
+    module load tacc-singularity
+    singularity exec --env APPEND_PATH="${ACTIVATE_ENV_PATH}" ${SINGULARITY} conda info --envs
+  fi
+}
+
+function mpi_command {
+  if [ -z ${MPI+x} ] || (( ${MPI} == 1 )); then
+    singularity_command
+  else
+    ibrun -n ${MPI} singularity_command
+  fi
+}
+
+mpi_command
